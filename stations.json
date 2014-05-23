@@ -1,0 +1,12 @@
+{ "stations": [
+    {
+        "name": "1live",
+        "url": "http://www.wdr.de/wdrlive/media/mp3/1live.m3u"
+    },
+    {
+        "name": "WDR2",
+        "url": "http://www.wdr.de/wdrlive/media/mp3/wdr2-ruhrgebiet.m3u"
+    }
+]}
+
+

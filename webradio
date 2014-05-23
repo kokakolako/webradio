@@ -1,0 +1,26 @@
+#!/usr/bin/zsh
+
+# Directory of the script and basename of the script location
+dir=$(/bin/readlink -f ${0%/*})
+
+case "$1" in
+
+    "-s" )
+        length=$( cat $dir/stations.json | jq '.stations | length')
+        let length--
+        for i in {0..$length}; do
+            station=$( cat $dir/stations.json | jq ".stations[$i].name" | tr -d '"' )
+            if [[ $2 == $station ]]; then
+                url=$( cat $dir/stations.json | jq ".stations[$i].url" | tr -d '"' )
+            fi
+        done
+        echo $url
+        mpv $( curl -s $url )
+    ;;
+
+    "-a" )
+        station_name=$2
+        station_url=$3
+    ;;
+
+esac
