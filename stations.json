@@ -1,12 +1,5 @@
-{ "stations": [
-    {
-        "name": "1live",
-        "url": "http://www.wdr.de/wdrlive/media/mp3/1live.m3u"
-    },
-    {
-        "name": "WDR2",
-        "url": "http://www.wdr.de/wdrlive/media/mp3/wdr2-ruhrgebiet.m3u"
-    }
-]}
-
-
+{
+  "1live": "http://www.wdr.de/wdrlive/media/mp3/1live.m3u",
+  "WDR2": "http://www.wdr.de/wdrlive/media/mp3/wdr2-ruhrgebiet.m3u",
+  "FFH": "http://streams.ffh.de/radioffh/mp3/hqlivestream.m3u"
+}

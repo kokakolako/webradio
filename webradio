@@ -1,26 +1,42 @@
 #!/usr/bin/zsh
 
-# Directory of the script and basename of the script location
-dir=$(/bin/readlink -f ${0%/*})
+# Directory of the script
+local dir=$(/bin/readlink -f ${0%/*})
 
 case "$1" in
 
-    "-s" )
-        length=$( cat $dir/stations.json | jq '.stations | length')
+    "-p" | "--play" )
+
+        # Count the keys that are defined in stations.json
+        local length=$( cat $dir/stations.json | jq 'keys | length' )
         let length--
+
+        # Create an array with the keys found in stations.json
         for i in {0..$length}; do
-            station=$( cat $dir/stations.json | jq ".stations[$i].name" | tr -d '"' )
+            local line=$(( $i + 2 ))
+            local station_as_word=$( cat $dir/stations.json | jq 'keys' | sed -n "${line}p" | tr -d '", ' | tr "\n" " " )
+            stations+=("$station_as_word")
+        done
+
+        # Get the url of the station from the user input
+        for i in {1..${#stations}}; do
+            local station=$( echo ${stations[$i]} | tr -d ' ' | tr -d "\n" )
             if [[ $2 == $station ]]; then
-                url=$( cat $dir/stations.json | jq ".stations[$i].url" | tr -d '"' )
+                url=$( cat $dir/stations.json | jq ".[\"$station\"]" | tr -d '"' )
             fi
         done
-        echo $url
+
+        # Download the stream with curl and playing the stream via mpv
         mpv $( curl -s $url )
     ;;
 
-    "-a" )
-        station_name=$2
-        station_url=$3
+    "-a" | "--add" )
+        echo "{\n\"$2\": \"$3\"\n}" > .stations.temp
+        jq -s add $dir/stations.json $dir/.stations.temp > .stations.json.new
+        rm .stations.temp
+        rm stations.json
+        mv .stations.json.new stations.json
+        echo "You added successfully $2 to your stations.json file!"
     ;;
 
 esac
