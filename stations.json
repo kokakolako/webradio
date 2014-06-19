@@ -2,4 +2,5 @@
   "1live": "http://www.wdr.de/wdrlive/media/mp3/1live.m3u",
   "WDR2": "http://www.wdr.de/wdrlive/media/mp3/wdr2-ruhrgebiet.m3u",
   "FFH": "http://streams.ffh.de/radioffh/mp3/hqlivestream.m3u"
+  "Radio Reddit Indie": "http://173.231.136.91:8090/;"
 }
